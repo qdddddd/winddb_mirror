@@ -1,5 +1,8 @@
 #!/bin/zsh
 
+GREEN="\033[1;32m"
+NOCOLOR="\033[0m"
+
 function ch_execute {
     clickhouse-client --host 192.168.47.110 --max_memory_usage 1280000000000 --multiquery $1
 }
@@ -42,8 +45,6 @@ function run_pipeline {
             OR ${version_col} > ver
         );
 
-        OPTIMIZE TABLE winddb_mirror.$1 FINAL;
-
         ALTER TABLE winddb_mirror.$1
         DELETE WHERE (
             (OBJECT_ID, ${version_col}) NOT IN (
@@ -55,7 +56,7 @@ function run_pipeline {
         );
     "
     elapsed=$(($(get_time)-$st))
-    echo "Finished in $(converts $elapsed) [$(ch_execute "SELECT count() FROM winddb_mirror.$1")]"
+    echo "${GREEN}Finished in $(converts $elapsed) [$(ch_execute "SELECT count() FROM winddb_mirror.$1")]${NOCOLOR}"
 }
 
 function insert_missing {
@@ -68,5 +69,5 @@ function insert_missing {
             OR ${version_col} > ver
         );
     "
-    echo "Row count = $(ch_execute "SELECT count() FROM winddb_mirror.$1")"
+    echo "[$(ch_execute "SELECT count() FROM winddb_mirror.$1")]"
 }
