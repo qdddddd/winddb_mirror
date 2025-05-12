@@ -1,0 +1,16 @@
+#!/bin/zsh
+
+echo "==== update_winddb_mirror ======================"
+echo "Executing on $(date)"
+
+script_path=/ivohf/qdu/scripts/update_winddb_mirror/tables
+
+. ${script_path}
+
+tables=($(grep -E '^function ' "${script_path}" | awk '{print $2}'))
+
+for table in ${tables}; do
+    ${table}
+done
+
+echo "Program finished on $(date)"

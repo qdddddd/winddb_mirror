@@ -1,0 +1,10 @@
+#!/bin/zsh
+echo "==== update_winddb_mirror ======================"
+echo "Executing on $(date)"
+
+. /ivohf/qdu/scripts/update_winddb_mirror/tables
+
+aindexeodprices
+
+echo -n "Sucessfully updated all tables."
+echo "Program finished on $(date)"

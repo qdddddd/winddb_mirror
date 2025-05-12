@@ -1,0 +1,50 @@
+#!/bin/zsh
+
+. /ivohf/qdu/scripts/update_winddb_mirror/utils
+
+function aindexdescriptionzl { run_pipeline ${funcstack[1]} }
+function aindexeodprices { run_pipeline ${funcstack[1]} }
+function aindexmembers { run_pipeline ${funcstack[1]} }
+function aindexmemberswind { run_pipeline ${funcstack[1]} }
+function aindexwindindustrieseod { run_pipeline ${funcstack[1]} }
+function ashareanninf { run_pipeline ${funcstack[1]} }
+function ashareauction { run_pipeline ${funcstack[1]} opdate }
+function asharecalendarzl { run_pipeline ${funcstack[1]} }
+function asharedescription { run_pipeline ${funcstack[1]} }
+function asharedividend { run_pipeline ${funcstack[1]} }
+function ashareeodderivativeindicator { run_pipeline ${funcstack[1]} }
+function ashareeodprices { run_pipeline ${funcstack[1]} }
+function asharefinancialindicator { run_pipeline ${funcstack[1]} }
+function asharefreefloat { run_pipeline ${funcstack[1]} }
+function ashareinsidertrade { run_pipeline ${funcstack[1]} }
+function ashareipo { run_pipeline ${funcstack[1]} }
+function asharel2indicators { run_pipeline ${funcstack[1]} }
+function asharemoneyflow { run_pipeline ${funcstack[1]} }
+function asharemscimembers { run_pipeline ${funcstack[1]} }
+function ashareplacementdetails { run_pipeline ${funcstack[1]} }
+function ashareseo { run_pipeline ${funcstack[1]} }
+function asharest { run_pipeline ${funcstack[1]} }
+function asharetradingsuspension { run_pipeline ${funcstack[1]} }
+function asharetradingsuspensionderived { run_pipeline ${funcstack[1]} }
+function asharetypecodezl { run_pipeline ${funcstack[1]} }
+function cbonddescription { run_pipeline ${funcstack[1]} }
+function cbondeodprices { run_pipeline ${funcstack[1]} }
+function chinaclosedfundeodprice { run_pipeline ${funcstack[1]} }
+function chinaetfpchredmlist { run_pipeline ${funcstack[1]} }
+function chinaetfpchredmmembers { run_pipeline ${funcstack[1]} }
+function chinafundmajorevent { run_pipeline ${funcstack[1]} }
+function chinamfdividend { run_pipeline ${funcstack[1]} }
+function chinamutualfunddescription { run_pipeline ${funcstack[1]} }
+function chinamutualfundnav { run_pipeline ${funcstack[1]} }
+function chinamutualfundsectorzl { run_pipeline ${funcstack[1]} }
+function chinamutualfundshare { run_pipeline ${funcstack[1]} }
+function chinamutualfundtrackingindexzl { run_pipeline ${funcstack[1]} }
+function cindexfutureseodprices { run_pipeline ${funcstack[1]} }
+function cmfiopvnav { run_pipeline ${funcstack[1]} }
+function cmftradingsuspension { run_pipeline ${funcstack[1]} }
+function cmfundsplit { run_pipeline ${funcstack[1]} }
+function neeqsdescription { run_pipeline ${funcstack[1]} }
+function neeqseodprices { run_pipeline ${funcstack[1]} }
+function suspendsecvaluation { run_pipeline ${funcstack[1]} }
+function suspendsecvaluationmethod { run_pipeline ${funcstack[1]} }
+function windcustomcode { run_pipeline ${funcstack[1]} }

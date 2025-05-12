@@ -1,0 +1,72 @@
+#!/bin/zsh
+
+function ch_execute {
+    clickhouse-client --host 192.168.47.110 --max_memory_usage 1280000000000 --multiquery $1
+}
+
+function get_time {
+    echo $(($(date +%s%0N)/1000000))
+}
+
+function converts {
+    local t=$1
+
+    local m=$((t/1000/60%60))
+    local s=$((t/1000%60))
+    local ms=$((t%1000))
+
+    if [[ $m -gt 0 ]]; then echo -n "${m}m "; fi
+    if [[ $s -gt 0 ]]; then echo -n "${s}s "; fi
+    if [[ $ms -gt 0 ]]; then echo -n "${ms}ms"; fi
+    echo
+}
+
+function run_pipeline {
+    echo -n "Preparing table $1... "
+    local version_col=${2:-OPDATE}
+    st=$(get_time)
+
+    update2date=$(ch_execute "WITH (SELECT count() FROM winddb_m.$1) AS new_count, (SELECT count() FROM winddb_mirror.$1) AS old_count SELECT new_count = old_count")
+
+    if [[ $update2date == 1 ]]; then
+        echo "Table is up to date [$(ch_execute "SELECT count() FROM winddb_mirror.$1")]"
+        return
+    fi
+
+    ch_execute "\
+        INSERT INTO winddb_mirror.$1
+        WITH (SELECT max(${version_col}) FROM winddb_mirror.$1) AS ver
+        SELECT * FROM winddb.$1
+        WHERE (
+            OBJECT_ID NOT IN (SELECT OBJECT_ID FROM winddb_mirror.$1)
+            OR ${version_col} > ver
+        );
+
+        OPTIMIZE TABLE winddb_mirror.$1 FINAL;
+
+        ALTER TABLE winddb_mirror.$1
+        DELETE WHERE (
+            (OBJECT_ID, ${version_col}) NOT IN (
+                SELECT OBJECT_ID, max(${version_col})
+                FROM winddb_mirror.$1
+                GROUP BY OBJECT_ID
+            )
+            OR OBJECT_ID NOT IN (SELECT DISTINCT OBJECT_ID FROM winddb_m.$1)
+        );
+    "
+    elapsed=$(($(get_time)-$st))
+    echo "Finished in $(converts $elapsed) [$(ch_execute "SELECT count() FROM winddb_mirror.$1")]"
+}
+
+function insert_missing {
+    ch_execute "\
+        INSERT INTO winddb_mirror.$1
+        WITH (SELECT max(${version_col}) FROM winddb_mirror.$1) AS ver
+        SELECT * FROM winddb.$1
+        WHERE (
+            OBJECT_ID NOT IN (SELECT OBJECT_ID FROM winddb_mirror.$1)
+            OR ${version_col} > ver
+        );
+    "
+    echo "Row count = $(ch_execute "SELECT count() FROM winddb_mirror.$1")"
+}
