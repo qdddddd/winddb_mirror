@@ -2,7 +2,7 @@
 echo "==== update_winddb_mirror ======================"
 echo "Executing on $(date)"
 
-. /ivohf/qdu/scripts/update_winddb_mirror/tables
+. ${0:a:h}/tables
 
 chinaetfpchredmlist
 chinaetfpchredmmembers

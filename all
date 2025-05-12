@@ -3,7 +3,7 @@
 echo "==== update_winddb_mirror ======================"
 echo "Executing on $(date)"
 
-script_path=/ivohf/qdu/scripts/update_winddb_mirror/tables
+script_path=${0:a:h}/tables
 
 . ${script_path}
 

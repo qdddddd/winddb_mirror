@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-. /ivohf/qdu/scripts/update_winddb_mirror/utils
+. ${0:a:h}/utils
 
 function aindexdescriptionzl { run_pipeline ${funcstack[1]} }
 function aindexeodprices { run_pipeline ${funcstack[1]} }
